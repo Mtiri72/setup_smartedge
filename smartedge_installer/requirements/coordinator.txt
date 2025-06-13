@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+cassandra-driver
+websockets
+psutil
+pyroute2
+aenum
+netifaces
