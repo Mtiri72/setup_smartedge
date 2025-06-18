@@ -198,6 +198,15 @@ class CoordinatorInstaller(BaseInstaller):
         venv_python = os.path.expanduser("~/smartedge_program/.venv/bin/python")
         script_path = os.path.expanduser("~/setup_smartedge/smartedge_installer/scripts/interface_prompt.py")
         subprocess.run([venv_python, script_path])
+        try:
+            logger.info("CoordinatorInstaller: Adding loopback alias lo:0 with IP 127.1.0.2/32")
+            subprocess.run(
+                ["sudo", "ip", "addr", "add", "127.1.0.2/32", "dev", "lo", "label", "lo:0"],
+                check=True
+            )
+            logger.info("✅ Loopback alias lo:0 configured successfully.")
+        except subprocess.CalledProcessError as e:
+            logger.error(f"❌ Failed to configure loopback alias: {e}")
 
 
     def validate_installation(self):
