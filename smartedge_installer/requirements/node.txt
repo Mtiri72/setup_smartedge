@@ -1,1 +1,12 @@
 
+psutil
+logging
+subprocess
+atexit
+queue
+time
+socket
+ipaddress
+os
+json
+argparse
