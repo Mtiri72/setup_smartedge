@@ -3,17 +3,20 @@
 REPO_URL="https://github.com/zoxerus/smartedge.git"
 PROGRAM_DIR="$HOME/smartedge_program"
 
-echo "🔧 Updating apt sources and enabling universe repo..."
-sudo add-apt-repository universe -y
-sudo apt-get update
+# Function: install base tools (git, pip, venv, curl)
+install_base_tools() {
+    echo "🔧 Updating apt sources and enabling universe repo..."
+    sudo add-apt-repository universe -y
+    sudo apt-get update
 
-echo "📦 Installing missing base tools: git, pip, venv..."
-sudo apt-get install -y git python3-pip python3-venv curl
+    echo "📦 Installing missing base tools: git, pip, venv..."
+    sudo apt-get install -y git python3-pip python3-venv curl
 
-if ! command -v git &>/dev/null; then
-  echo "❌ Git is not available and could not be installed. Please check your apt sources."
-  exit 1
-fi
+    if ! command -v git &>/dev/null; then
+        echo "❌ Git is not available and could not be installed. Please check your apt sources."
+        exit 1
+    fi
+}
 
 
 # Step 1: Check internet connection
@@ -71,6 +74,7 @@ launch_python_installer() {
 
 # Run all steps
 check_internet
+install_base_tools
 ensure_python
 clone_program_repo
 launch_python_installer
