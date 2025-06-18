@@ -3,7 +3,6 @@ import subprocess
 import os
 import shutil
 import venv
-import psutil
 from smartedge_installer.utils.logger import get_logger
 
 logger = get_logger("AccessPointInstaller")
@@ -12,6 +11,7 @@ PROGRAM_DIR = os.path.expanduser("~/smartedge_program")
 VENV_DIR = os.path.join(PROGRAM_DIR, ".venv")
 REQUIREMENTS_FILE = os.path.expanduser("~/setup_smartedge/smartedge_installer/requirements/access_point.txt")
 LOOPBACK_ALIAS = "127.1.0.3"
+
 
 class AccessPointInstaller(BaseInstaller):
     def __init__(self):
@@ -34,6 +34,10 @@ class AccessPointInstaller(BaseInstaller):
 
     def install_dependencies(self):
         self.logger.info("Installing dependencies for Access Point...")
+        subprocess.run(["sudo", "apt-get", "install", "-y", "docker.io"])
+        subprocess.run(["sudo", "docker", "pull", "p4lang/behavioral-model"])
+        subprocess.run(["sudo", "docker", "tag", "p4lang/behavioral-model", "bmv2se"])
+        subprocess.run(["sudo", "apt-get", "install", "-y", "net-tools"])
         apt_packages = [
             "net-tools", "screen", "python3-pip", "python3-venv", "iproute2"
         ]
@@ -49,7 +53,9 @@ class AccessPointInstaller(BaseInstaller):
 
     def configure_network(self):
         self.logger.info("Configuring network for Access Point...")
-        self.prompt_for_wireless_interface_rename()
+        venv_python = os.path.expanduser("~/smartedge_program/.venv/bin/python")
+        script_path = os.path.expanduser("~/setup_smartedge/smartedge_installer/scripts/wireless_interface_prompt.py")
+        subprocess.run([venv_python, script_path])
         try:
             subprocess.run([
                 "sudo", "ip", "addr", "add", f"{LOOPBACK_ALIAS}/32",
@@ -72,29 +78,4 @@ class AccessPointInstaller(BaseInstaller):
         else:
             self.logger.warning("Requirements file is missing.")
 
-    def prompt_for_wireless_interface_rename(self):
-        print("\n🔧 Detecting wireless interfaces...\n")
-        interfaces = psutil.net_if_addrs().keys()
-        wireless_interfaces = [iface for iface in interfaces if not iface.startswith("lo")]
-        if not wireless_interfaces:
-            print("❌ No wireless interfaces found.")
-            return
-
-        print("📡 Available wireless interfaces:")
-        for i, iface in enumerate(wireless_interfaces, start=1):
-            print(f"{i}. {iface}")
-
-        try:
-            selected = int(input("\nPlease select which interface to rename to 'wlan0': "))
-            selected_iface = list(wireless_interfaces)[selected - 1]
-            print(f"🔄 Renaming '{selected_iface}' to 'wlan0'...")
-
-            subprocess.run(["sudo", "ip", "link", "set", selected_iface, "down"], check=True)
-            subprocess.run(["sudo", "ip", "link", "set", selected_iface, "name", "wlan0"], check=True)
-            subprocess.run(["sudo", "ip", "link", "set", "wlan0", "up"], check=True)
-
-            print("✅ Interface renamed successfully.")
-        except (IndexError, ValueError):
-            print("❌ Invalid selection.")
-        except subprocess.CalledProcessError:
-            print("❌ Failed to rename interface. You may need to reboot or reconfigure.")
+    
