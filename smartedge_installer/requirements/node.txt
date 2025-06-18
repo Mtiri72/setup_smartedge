@@ -1,5 +1,4 @@
 psutil
 logging
 ipaddress
-json
 argparse
