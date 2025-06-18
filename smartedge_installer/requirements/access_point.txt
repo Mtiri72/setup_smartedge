@@ -1,3 +1,6 @@
 cassandra-driver
 pyroute2
 psutil
+aenum
+netifaces
+thrift
