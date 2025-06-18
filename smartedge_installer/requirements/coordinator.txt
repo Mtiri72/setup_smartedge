@@ -6,3 +6,4 @@ psutil
 pyroute2
 aenum
 netifaces
+thrift
