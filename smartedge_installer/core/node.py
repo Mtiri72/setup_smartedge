@@ -1,9 +1,27 @@
 from smartedge_installer.core.base_installer import BaseInstaller
+from smartedge_installer.utils.logger import get_logger
 import subprocess
+import venv
 import os
 import logging
+logger = get_logger("NodeInstaller")
 
 class NodeInstaller(BaseInstaller):
+    def __init__(self):
+        super().__init__()
+        logger.info("NodeInstaller: Initialized installer.")
+
+    def run(self):
+        print("\n➡️  Starting installation for: Node")
+        logger.info("NodeInstaller: Starting installation sequence.")
+
+        self.pre_checks()
+        self.install_dependencies()
+        self.setup_virtualenv_and_install_python_deps()
+        self.configure_network()
+        self.validate_installation()
+        logger.info("NodeInstaller: ✅ Installation completed successfully.")
+
     def pre_checks(self):
         self.logger.info("Running pre-checks for Node...")
         # Ensure script is not run as root
@@ -52,3 +70,21 @@ class NodeInstaller(BaseInstaller):
             self.logger.info("✅ nikss-ctl is correctly installed.")
         else:
             self.logger.warning("❌ nikss-ctl was not found in PATH.")
+
+    def setup_virtualenv_and_install_python_deps(self):
+        logger.info("NodeInstaller: Setting up Python venv and installing Python dependencies...")
+        project_dir = os.path.expanduser("~/smartedge_program")
+        venv_dir = os.path.join(project_dir, ".venv")
+
+        if not os.path.exists(venv_dir):
+            venv.create(venv_dir, with_pip=True)
+
+        pip_path = os.path.join(venv_dir, "bin", "pip")
+
+        # UPDATED: path to requirements inside setup_smartedge
+        requirements_path = os.path.expanduser(
+            "~/setup_smartedge/smartedge_installer/requirements/node.txt"
+        )
+
+        subprocess.run([pip_path, "install", "--upgrade", "pip"])
+        subprocess.run([pip_path, "install", "-r", requirements_path])

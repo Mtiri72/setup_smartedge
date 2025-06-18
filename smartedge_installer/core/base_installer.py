@@ -70,3 +70,14 @@ class BaseInstaller(abc.ABC):
             logger.error(f"❌ Failed to install system packages: {e}")
             raise
 
+    def install_pip_dependencies(self, pip_packages):
+        logger.info(f"📦 Installing pip packages: {', '.join(pip_packages)}")
+        try:
+            subprocess.run(["python3", "-m", "pip", "install", "--upgrade", "pip"], check=True)
+            subprocess.run(["python3", "-m", "pip", "install"] + pip_packages, check=True)
+            self.logger.info("✅ pip dependencies installed successfully.")
+        except subprocess.CalledProcessError as e:
+            self.logger.error(f"❌ Failed to install pip packages: {e}")
+            raise
+
+

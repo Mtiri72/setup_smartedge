@@ -1,7 +1,5 @@
 psutil
 logging
-subprocess
-atexit
 queue
 time
 socket
