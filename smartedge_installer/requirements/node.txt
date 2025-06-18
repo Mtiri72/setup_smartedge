@@ -1,9 +1,5 @@
 psutil
 logging
-queue
-time
-socket
 ipaddress
-os
 json
 argparse
