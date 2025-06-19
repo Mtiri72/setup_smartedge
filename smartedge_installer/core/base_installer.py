@@ -3,6 +3,7 @@ from smartedge_installer.utils.logger import get_logger
 import platform
 import shutil
 import subprocess
+import os
 logger = get_logger("BaseInstaller")
 
 
