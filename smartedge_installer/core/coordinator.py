@@ -211,4 +211,5 @@ class CoordinatorInstaller(BaseInstaller):
 
     def validate_installation(self):
         logger.info("CoordinatorInstaller: Validating Coordinator setup...")
+        self.post_install_prompt()
         # Placeholder: to be implemented later as needed
