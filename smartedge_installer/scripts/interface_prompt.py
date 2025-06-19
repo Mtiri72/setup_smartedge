@@ -14,7 +14,7 @@ def prompt_for_interface_rename():
         print(f"{i}. {iface}")
 
     try:
-        selected = int(input("\nPlease select which interface to rename to 'eth0': "))
+        selected = int(input("\nPlease select which interface to use as 'eth0': "))
         selected_iface = list(interfaces)[selected - 1]
         print(f"🔄 Renaming '{selected_iface}' to 'eth0'...")
 
@@ -22,7 +22,7 @@ def prompt_for_interface_rename():
         subprocess.run(["sudo", "ip", "link", "set", selected_iface, "name", "eth0"], check=True)
         subprocess.run(["sudo", "ip", "link", "set", "eth0", "up"], check=True)
 
-        print("✅ Interface renamed successfully.")
+        print("✅ Interface configured successfully.")
     except (IndexError, ValueError):
         print("❌ Invalid selection.")
     except subprocess.CalledProcessError:
