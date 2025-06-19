@@ -15,7 +15,7 @@ def prompt_for_wireless_interface_rename():
             print(f"{i}. {iface}")
 
         try:
-            selected_wlan = int(input("\nPlease select which interface to rename to 'wlan0': "))
+            selected_wlan = int(input("\nPlease select which interface to use as 'wlan0': "))
             wlan_iface = list(non_loopback)[selected_wlan - 1]
             print(f"🔄 Renaming '{wlan_iface}' to 'wlan0'...")
 
@@ -33,7 +33,7 @@ def prompt_for_wireless_interface_rename():
             for i, iface in enumerate(non_loopback, start=1):
                 print(f"{i}. {iface}")
 
-            selected_eth = int(input("\nPlease select which interface to rename to 'eth0': "))
+            selected_eth = int(input("\nPlease select which interface to use as 'eth0': "))
             eth_iface = list(non_loopback)[selected_eth - 1]
             print(f"🔄 Renaming '{eth_iface}' to 'eth0'...")
 
