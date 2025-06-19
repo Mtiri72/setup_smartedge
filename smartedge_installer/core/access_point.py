@@ -77,6 +77,18 @@ class AccessPointInstaller(BaseInstaller):
             self.logger.info("Requirements file is present.")
         else:
             self.logger.warning("Requirements file is missing.")
+        
+        bmv2_script_path = os.path.expanduser("~/smartedge_program/shell_scripts/run_bmv2_docker.sh")
+        if os.path.exists(bmv2_script_path):
+            self.logger.info("Launching BMv2 Docker container...")
+            try:
+                subprocess.run(["chmod", "+x", bmv2_script_path], check=True)
+                subprocess.run(["bash", bmv2_script_path], check=True)
+                self.logger.info("✅ BMv2 container launched successfully.")
+            except subprocess.CalledProcessError as e:
+                self.logger.error(f"❌ Failed to launch BMv2 container: {e}")
+        else:
+            self.logger.warning(f"⚠️ BMv2 launch script not found at {bmv2_script_path}")
 
         self.post_install_prompt()
 
