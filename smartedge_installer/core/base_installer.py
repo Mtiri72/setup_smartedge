@@ -80,4 +80,30 @@ class BaseInstaller(abc.ABC):
             self.logger.error(f"❌ Failed to install pip packages: {e}")
             raise
 
+    def post_install_prompt(self):
+        self.logger.info("🚀 Installation complete.")
+        response = input("👉 Do you want to start the artifact now? [y/N]: ").strip().lower()
+
+        if response == 'y':
+            program_dir = os.path.expanduser("~/smartedge_program")
+            venv_activate = os.path.join(program_dir, ".venv", "bin", "activate")
+
+            if not os.path.exists(venv_activate):
+                self.logger.error("❌ Virtual environment not found. Please check your setup.")
+                return
+
+            self.logger.info("Activating virtual environment in a new shell...")
+
+            bash_command = f'''
+            cd {program_dir}
+            source .venv/bin/activate
+            echo -e "\\n✅ Virtual environment activated."
+            echo -e "👉 To start the artifact, type: source run.sh [co|ap|sn] 10"
+            exec bash
+            '''
+
+            subprocess.run(["bash", "-c", bash_command])
+        else:
+            self.logger.info("ℹ️ Installation completed. You can start the artifact manually later.")
+
 
