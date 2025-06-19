@@ -82,6 +82,7 @@ class NodeInstaller(BaseInstaller):
             self.logger.info("✅ nikss-ctl is correctly installed.")
         else:
             self.logger.warning("❌ nikss-ctl was not found in PATH.")
+        self.post_install_prompt()
 
     def setup_virtualenv_and_install_python_deps(self):
         logger.info("NodeInstaller: Setting up Python venv and installing Python dependencies...")
