@@ -78,4 +78,6 @@ class AccessPointInstaller(BaseInstaller):
         else:
             self.logger.warning("Requirements file is missing.")
 
+        self.post_install_prompt()
+
     
