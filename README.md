@@ -1,6 +1,3 @@
-from pathlib import Path
-
-readme_content = """
 # SmartEdge Setup Program
 
 This is a setup program for the **SmartEdge networking system**. It automates the installation of all dependencies and environment setup needed to run the SmartEdge artifacts on a freshly formatted **x64 Ubuntu machine**.
@@ -33,56 +30,27 @@ Before using this program, ensure:
 3. Insert the USB into the installation machine.
 4. Open a terminal and navigate to the extracted folder:
 
-   ```bash
-   cd setup_smartedge
-🧠 Program Behavior
 
-    The program starts by updating the system and installing general dependencies.
+##🧠 Program Behavior
 
-    It prompts you to select which SmartEdge artifact to install:
+The program starts by updating the system and installing general dependencies.
+It prompts you to select which SmartEdge artifact to install:
+ co → Coordinator
+ ap → Access Point
+ sn → Smart Node
 
-        co → Coordinator
+Based on your choice, it will ask you to select:
+ A wireless interface (for hotspot or connection)
+ An Ethernet interface (for backend communication)
 
-        ap → Access Point
+After installation, the setup program asks:
+ 👉 Do you want to start the artifact now?
+   If you answer yes, it opens a new shell and activates the virtual environment :
+ 👉 To start the artifact, type: source run.sh [co|ap|sn] 10
 
-        sn → Smart Node
-
-    Based on your choice, it will ask you to select:
-
-        A wireless interface (for hotspot or connection)
-
-        An Ethernet interface (for backend communication)
-
-    After installation, the setup program asks:
-
-        👉 Do you want to start the artifact now?
-
-    If you answer yes, it opens a new shell, activates the virtual environment and tells you:
-
-Always show details
-
-    ✅ Virtual environment activated.
-    👉 To start the artifact, type: source run.sh [co|ap|sn] 10
-
-🐳 Docker Images Note
+## 🐳 Docker Images Note
 
 If you face issues when downloading Docker images like bmv2 or cassandra, make sure you are logged into your Docker account using:
-
-Always show details
-
-docker login
-
+ docker login
 Then, restart the setup process.
-🧼 Cleanup
 
-After successful installation, the system is ready to run the SmartEdge platform using:
-
-Always show details
-
-source run.sh [co|ap|sn] 10
-
-Replace [co|ap|sn] with your artifact type.
-✅ Summary
-
-This setup tool provides a streamlined, interactive setup for SmartEdge on Ubuntu systems, ensuring all prerequisites and configurations are handled correctly.
-"""
