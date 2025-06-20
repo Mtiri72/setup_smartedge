@@ -35,13 +35,13 @@ Before using this program, ensure:
 
 The program starts by updating the system and installing general dependencies.
 It prompts you to select which SmartEdge artifact to install:
- co → Coordinator
- ap → Access Point
- sn → Smart Node
+ - co → Coordinator
+ - ap → Access Point
+ - sn → Smart Node
 
 Based on your choice, it will ask you to select:
- A wireless interface (for hotspot or connection)
- An Ethernet interface (for backend communication)
+ - A wireless interface (for hotspot or connection)
+ - An Ethernet interface (for backend communication)
 
 After installation, the setup program asks:
  👉 Do you want to start the artifact now?
