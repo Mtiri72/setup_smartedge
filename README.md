@@ -31,7 +31,7 @@ Before using this program, ensure:
 4. Open a terminal and navigate to the extracted folder:
 
 
-##🧠 Program Behavior
+## 🧠 Program Behavior
 
 The program starts by updating the system and installing general dependencies.
 It prompts you to select which SmartEdge artifact to install:
