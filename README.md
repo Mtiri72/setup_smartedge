@@ -44,13 +44,13 @@ Based on your choice, it will ask you to select:
  - An Ethernet interface (for backend communication)
 
 After installation, the setup program asks:
- 👉 Do you want to start the artifact now?
-   If you answer yes, it opens a new shell and activates the virtual environment :
- 👉 To start the artifact, type: source run.sh [co|ap|sn] 10
+ - 👉 Do you want to start the artifact now?
+   - If you answer yes, it opens a new shell and activates the virtual environment :
+ - 👉 To start the artifact, type: source run.sh [co|ap|sn] 10
 
 ## 🐳 Docker Images Note
 
 If you face issues when downloading Docker images like bmv2 or cassandra, make sure you are logged into your Docker account using:
- docker login
+ - docker login
 Then, restart the setup process.
 
